@@ -1,9 +1,8 @@
-# nrfUart
-nrfUart
 
 change to appcompactactivity
 use mvvm androidarch lifecycle
 
+ All fragment will receive the broadcast simultaneously. This should not occur as only the activity that user view should receive broadcast. Should not all receive. 
 
 
 Fork of Android-nRF-UART
