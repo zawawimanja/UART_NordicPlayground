@@ -34,7 +34,7 @@
 
             <EditText
                 android:id="@+id/sendText"
-                android:layout_width="102dp"
+                android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
@@ -46,6 +46,12 @@
                 android:maxLength="20"
                 android:maxLines="1"
                 android:shadowRadius="1" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
 
             <ListView
                 android:id="@+id/listMessage"
@@ -64,6 +70,8 @@
                 android:layout_alignParentRight="true"
                 android:enabled="false"
                 android:text="Send" />
+
+
 
         </RelativeLayout>
     </LinearLayout>
@@ -103,5 +111,8 @@
             android:text="_"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
+
+
+
 
 </LinearLayout>
