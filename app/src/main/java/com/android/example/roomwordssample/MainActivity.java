@@ -91,8 +91,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect,btnSend;
     private EditText edtMessage;
-    UartViewModel sharedViewModel;
+  //  UartViewModel sharedViewModel;
     private boolean hasReceivedServices = false;
+    private UartViewModel sharedViewModel;
+    Button btnSendFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,11 +112,13 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         messageListView.setDivider(null);
         btnConnectDisconnect=(Button) findViewById(R.id.btn_select);
         btnSend=(Button) findViewById(R.id.sendButton);
+        btnSendFragment=(Button) findViewById(R.id.btn_fragment2);
         edtMessage = (EditText) findViewById(R.id.sendText);
-        service_init();
+       service_init();
 
 
         // Set up the WordViewModel.
+       // sharedViewModel = ViewModelProviders.of(this).get(UartViewModel.class);
         sharedViewModel = ViewModelProviders.of(this).get(UartViewModel.class);
 
 
@@ -175,6 +179,37 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             }
         });
 
+
+        // Handle Send button
+        btnSendFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                EditText editText = (EditText) findViewById(R.id.sendText);
+//                String message = editText.getText().toString();
+//                byte[] value;
+//                try {
+//                    //send data to service
+//                    value = message.getBytes("UTF-8");
+//                    mService.writeRXCharacteristic(value);
+//                    //Update the log with time stamp
+//                    String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
+//                    listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
+//                    messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
+//                    edtMessage.setText("");
+//                } catch (UnsupportedEncodingException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//                Intent dash = new Intent(getApplicationContext(),Main2Activity.class);
+//                startActivity(dash);
+
+                loadFragment(new SecondFragment());
+
+
+            }
+        });
+
+
         // Set initial UI state
 
     }
@@ -208,6 +243,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         }
     };
 
+
+
     private Handler mHandler = new Handler() {
         @Override
 
@@ -229,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     public void run() {
                         sharedViewModel.setConnectionState(0);
                         sharedViewModel.setHasReceivedServices(hasReceivedServices);
+//                        mViewModel.setConnectionState(0);
+//                        mViewModel.setHasReceivedServices(hasReceivedServices);
                         String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         Log.d(TAG, "UART_CONNECT_MSG");
                         btnConnectDisconnect.setText("Disconnect");
@@ -248,6 +287,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     public void run() {
                         sharedViewModel.setConnectionState(1);
                         sharedViewModel.setHasReceivedServices(hasReceivedServices);
+//                        mViewModel.setConnectionState(1);
+//                        mViewModel.setHasReceivedServices(hasReceivedServices);
                         String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         Log.d(TAG, "UART_DISCONNECT_MSG");
                         btnConnectDisconnect.setText("Connect");
@@ -269,12 +310,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 hasReceivedServices = true;
                 sharedViewModel.setConnectionState(2);
                 sharedViewModel.setHasReceivedServices(hasReceivedServices);
+//                mViewModel.setConnectionState(2);
+//                mViewModel.setHasReceivedServices(hasReceivedServices);
+
                 mService.enableTXNotification();
             }
             //*********************//
             if (action.equals(UartService.ACTION_DATA_AVAILABLE)) {
                 sharedViewModel.setConnectionState(3);
                 sharedViewModel.setHasReceivedServices(hasReceivedServices);
+//               mViewModel.setConnectionState(3);
+//                mViewModel.setHasReceivedServices(hasReceivedServices);
+
 
                 final byte[] txValue = intent.getByteArrayExtra(UartService.EXTRA_DATA);
                 runOnUiThread(new Runnable() {
@@ -307,6 +354,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
         LocalBroadcastManager.getInstance(this).registerReceiver(UARTStatusChangeReceiver, makeGattUpdateIntentFilter());
     }
+
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(UartService.ACTION_GATT_CONNECTED);
@@ -384,7 +432,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
                     Log.d(TAG, "... onActivityResultdevice.address==" + mDevice + "mserviceValue" + mService);
                     ((TextView) findViewById(R.id.deviceName)).setText(mDevice.getName()+ " - connecting");
-                    mService.connect(deviceAddress);
+
+                  mService.connect(deviceAddress);
+                //    mViewModel.setServiceState(deviceAddress);
 
 
                 }
@@ -443,4 +493,20 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     .show();
         }
     }
+
+
+//
+//    private void startService(){
+//        Intent serviceIntent = new Intent(this, UartService.class);
+//        startService(serviceIntent);
+//
+//        bindService();
+//    }
+
+//    private void bindService(){
+//        Intent serviceBindIntent =  new Intent(this,  UartService.class);
+//        bindService(serviceBindIntent, mViewModel.getServiceConnection(), Context.BIND_AUTO_CREATE);
+//    }
+//
+
 }

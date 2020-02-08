@@ -12,22 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-public class SimpleFragment extends Fragment {
+
+public class SecondFragment extends Fragment {
 
     private String mParam1;
     View view;
     Button firstButton;
     private static final String ARG_PARAM1 = "param1";
-   // UartViewModel sharedViewModel;
+    // UartViewModel sharedViewModel;
     UartViewModel sharedViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_simple, container, false);
+        view = inflater.inflate(R.layout.fragment_two, container, false);
 // get the reference of Button
-        firstButton = (Button) view.findViewById(R.id.firstButton);
+        firstButton = (Button) view.findViewById(R.id.secondButton);
 // perform setOnClickListener on first Button
         firstButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +52,7 @@ public class SimpleFragment extends Fragment {
         sharedViewModel.getConnectionState().observe((FragmentActivity) getActivity(), new Observer<Integer>() {
             @Override
             public void onChanged(@NonNull Integer connectState) {
-                Log.i("TestFragment1",connectState.toString());
+                Log.i("TestFragment2",connectState.toString());
             }
         });
 

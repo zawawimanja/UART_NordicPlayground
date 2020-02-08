@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class Main2Activity extends AppCompatActivity {
 
-    UartViewModel mUartViewModel;
+    //UartViewModel mUartViewModel;
     TextView connectionStatus;
     private int connectionState;
     private boolean hasReceivedServices;
@@ -24,22 +24,22 @@ public class Main2Activity extends AppCompatActivity {
 
 
         // Set up the WordViewModel.
-        mUartViewModel = ViewModelProviders.of(this).get(UartViewModel.class);
-        mUartViewModel.getConnectionState().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@NonNull Integer connectState) {
-                connectionState = connectState;
-                setConnectionState(connectionState, hasReceivedServices);
-            }
-        });
-
-        mUartViewModel.getHasReceivedServices().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@NonNull Boolean servicesStatus) {
-                hasReceivedServices = servicesStatus;
-                setConnectionState(connectionState, hasReceivedServices);
-            }
-        });
+//        mUartViewModel = ViewModelProviders.of(this).get(UartViewModel.class);
+//        mUartViewModel.getConnectionState().observe(this, new Observer<Integer>() {
+//            @Override
+//            public void onChanged(@NonNull Integer connectState) {
+//                connectionState = connectState;
+//                setConnectionState(connectionState, hasReceivedServices);
+//            }
+//        });
+//
+//        mUartViewModel.getHasReceivedServices().observe(this, new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(@NonNull Boolean servicesStatus) {
+//                hasReceivedServices = servicesStatus;
+//                setConnectionState(connectionState, hasReceivedServices);
+//            }
+//        });
 
     }
 

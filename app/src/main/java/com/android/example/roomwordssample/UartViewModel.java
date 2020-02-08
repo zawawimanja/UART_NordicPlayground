@@ -4,6 +4,7 @@ package com.android.example.roomwordssample;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.ServiceConnection;
 
 public class UartViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isScrollToEndSelected = new MutableLiveData<Boolean>();
@@ -34,6 +35,10 @@ public class UartViewModel extends ViewModel {
     public LiveData<Integer> getConnectionState() {
         return connectionState;
     }
+
+
+
+
 
 
 
